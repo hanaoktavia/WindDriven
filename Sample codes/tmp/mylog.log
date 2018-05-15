@@ -1,0 +1,69 @@
+13:17:31.350 [INFO ] Programm started
+13:17:31.350 [ERROR] Error - Unable to open UART.
+13:17:31.350 [ERROR] Failed to open uart
+13:17:31.485 [INFO ] constructor called
+13:17:31.579 [INFO ] Function resizeEvent called
+13:17:31.779 [INFO ] Function resizeEvent stopped
+13:17:31.831 [INFO ] constructor ended
+13:17:31.861 [INFO ] Function resizeEvent called
+13:17:32.061 [INFO ] Function resizeEvent stopped
+13:19:34.284 [WARN ] UartTranslator thread terminated
+11:35:31.914 [INFO ] Programm started
+11:35:31.932 [ERROR] Error - Unable to open UART.
+11:35:31.935 [ERROR] Failed to open uart
+11:35:32.031 [INFO ] constructor called
+11:35:32.234 [INFO ] Function resizeEvent called
+11:35:32.434 [INFO ] Function resizeEvent stopped
+11:35:32.465 [INFO ] constructor ended
+11:35:32.489 [INFO ] Function resizeEvent called
+11:35:32.690 [INFO ] Function resizeEvent stopped
+12:03:28.785 [WARN ] UartTranslator thread terminated
+14:25:44.041 [INFO ] Programm started
+14:25:44.062 [ERROR] Error - Unable to open UART.
+14:25:44.063 [ERROR] Failed to open uart
+14:25:44.177 [INFO ] constructor called
+14:25:44.308 [INFO ] Function resizeEvent called
+14:25:44.509 [INFO ] Function resizeEvent stopped
+14:25:44.556 [INFO ] constructor ended
+14:25:44.574 [INFO ] Function resizeEvent called
+14:25:44.774 [INFO ] Function resizeEvent stopped
+14:25:50.890 [INFO ] Function resizeEvent called
+14:25:50.891 [INFO ] Function resizeEvent called
+14:25:51.091 [INFO ] Function resizeEvent stopped
+14:25:51.291 [INFO ] Function resizeEvent stopped
+14:25:51.306 [INFO ] Function resizeEvent called
+14:25:51.306 [INFO ] Function resizeEvent called
+14:25:51.506 [INFO ] Function resizeEvent stopped
+14:25:51.706 [INFO ] Function resizeEvent stopped
+14:39:29.814 [INFO ] Function resizeEvent called
+14:39:29.816 [INFO ] Function resizeEvent called
+14:39:30.016 [INFO ] Function resizeEvent stopped
+14:39:30.217 [INFO ] Function resizeEvent stopped
+14:39:44.977 [INFO ] Function resizeEvent called
+14:39:44.978 [INFO ] Function resizeEvent called
+14:39:45.178 [INFO ] Function resizeEvent stopped
+14:39:45.378 [INFO ] Function resizeEvent stopped
+14:39:45.399 [INFO ] Function resizeEvent called
+14:39:45.400 [INFO ] Function resizeEvent called
+14:39:45.600 [INFO ] Function resizeEvent stopped
+14:39:45.800 [INFO ] Function resizeEvent stopped
+14:39:45.818 [INFO ] Function resizeEvent called
+14:39:45.818 [INFO ] Function resizeEvent called
+14:39:46.018 [INFO ] Function resizeEvent stopped
+14:39:46.219 [INFO ] Function resizeEvent stopped
+14:39:46.241 [INFO ] Function resizeEvent called
+14:39:46.241 [INFO ] Function resizeEvent called
+14:39:46.441 [INFO ] Function resizeEvent stopped
+14:39:46.642 [INFO ] Function resizeEvent stopped
+14:39:52.698 [INFO ] Function resizeEvent called
+14:39:52.699 [INFO ] Function resizeEvent called
+14:39:52.899 [INFO ] Function resizeEvent stopped
+14:39:53.099 [INFO ] Function resizeEvent stopped
+14:39:53.141 [INFO ] Function resizeEvent called
+14:39:53.142 [INFO ] Function resizeEvent called
+14:39:53.342 [INFO ] Function resizeEvent stopped
+14:39:53.543 [INFO ] Function resizeEvent stopped
+14:39:53.570 [INFO ] Function resizeEvent called
+14:39:53.571 [INFO ] Function resizeEvent called
+14:39:53.771 [INFO ] Function resizeEvent stopped
+14:39:53.971 [INFO ] Function resizeEvent stopped
