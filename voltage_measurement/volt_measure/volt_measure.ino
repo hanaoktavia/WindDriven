@@ -22,7 +22,7 @@ int sum = 0;                    // sum of samples taken
 unsigned char sample_count = 0; // current sample number
 float voltage = 0.0;            // calculated voltage
 float current = 0.0;
-float resistor = 1100000.0;
+float resistor = 1100000.0;     //1.1MOhm
 float calib = 11.132;
 
 void setup()
