@@ -47,10 +47,10 @@ void loop()
     // divides by 11. 11.132 is the calibrated voltage divide
     // value
     current = (voltage * calib)/resistor;
-    Serial.print(voltage * calib);
-    Serial.println (" V");
-    Serial.print(current,9);
-    Serial.println(" A");
+    Serial.print(voltage * calib); //voltage
+    //Serial.println (" V");
+    Serial.print(current);      //current
+    //Serial.println(" A");
     sample_count = 0;
     sum = 0;
 }
