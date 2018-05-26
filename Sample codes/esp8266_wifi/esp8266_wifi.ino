@@ -1,8 +1,8 @@
 #include <SoftwareSerial.h>
 
-#define RX 2    // 0
-#define TX 3    // 1
-SoftwareSerial esp8266(RX, TX); 
+//#define RX 2    // 0
+//#define TX 3    // 1
+SoftwareSerial esp8266(2, 3); 
 
 void setup() {
 
@@ -29,7 +29,7 @@ void loop() {
 
     //read the command character by character
     while(Serial.available())
-    {
+    { 
       command += (char)Serial.read(); // read the command character by character
       }
       esp8266.println(command); // send the read character to the esp8266

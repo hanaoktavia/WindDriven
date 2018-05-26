@@ -23,7 +23,7 @@
 #define SSID        "ITEAD"
 #define PASSWORD    "12345678"
 
-ESP8266 wifi(Serial1);
+ESP8266 wifi(Serial);
 
 void setup(void)
 {
