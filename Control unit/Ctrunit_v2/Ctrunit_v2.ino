@@ -1,3 +1,5 @@
+#include <TimerThree.h>
+
 #include <TimerOne.h>
 
 #include <Ethernet.h>
@@ -18,6 +20,9 @@
 
 #define NUM_SAMPLES 10
 #define LCD_BACKLIGHT A4
+
+#define pin_with_pullup 8 //overvoltage ----> OV for LCD 
+#define pin_with_pullup2 9 //overheating ---> OH for LCD
 
 int sum = 0;                    // sum of samples taken
 unsigned char sample_count = 0; // current sample number
@@ -54,28 +59,85 @@ void timerIsr(){
   lcd.print(rotation, DEC);
   Serial.print(rotation);
 
+//  lcd.setCursor(0,1);
+//  lcd.print("Vcap: ");
+//  lcd.print(voltage * calib);
+//  lcd.print("V");
+//
+//  lcd.setCursor(14,0);
+//  if(digitalRead(pin_with_pullup) == HIGH)
+//  {lcd.print("OV");}
+//  else{;}
+//  if(digitalRead(pin_with_pullup2) == LOW)
+//  {lcd.print("OH");}
+//  else{;}
+//  
+//
+//  lcd.display();
+//  counter = 0;
+//  Timer1.attachInterrupt(timerIsr);
+  }
+
+void timerIsr2(){
+  Timer3.detachInterrupt();
+  lcd.begin(16,2);
+
   lcd.setCursor(0,1);
   lcd.print("Vcap: ");
   lcd.print(voltage * calib);
   lcd.print("V");
 
+  lcd.setCursor(14,0);
+  if(digitalRead(pin_with_pullup) == HIGH)
+  {lcd.print("OV");}
+  else{;}
+  if(digitalRead(pin_with_pullup2) == LOW)
+  {lcd.print("OH");}
+  else{;}
+  
+
   lcd.display();
   counter = 0;
   Timer1.attachInterrupt(timerIsr);
-  }
+}
 
 void setup() {
   Serial.begin(9600);
+  
+  pinMode(pin_with_pullup, INPUT_PULLUP);
+  pinMode(pin_with_pullup2, INPUT_PULLUP);
 
   pinMode(LCD_BACKLIGHT, OUTPUT);
 
   Timer1.initialize(60000000);
+  Timer3.initialize(10000000);
   attachInterrupt(0, docount, RISING);
   Timer1.attachInterrupt(timerIsr);
+  Timer3.attachInterrupt(timerIsr2);
 }
 
 void loop() {
   delay(100);
+
+  
+  int sensorVal = digitalRead(pin_with_pullup);
+  int sensorVal2 = digitalRead(pin_with_pullup2);
+
+  //Debug code
+  Serial.print("Debug --> Digitalpin1 value -->");
+  Serial.println(sensorVal);
+  Serial.print("Debug --> Digitalpin2 value -->");
+  Serial.println(sensorVal2);
+
+  if(sensorVal == HIGH)
+  {
+    Serial.print("ATTENTION! OVERVOLTAGE!!");
+  }else{;}
+  if(sensorVal2 == HIGH)
+  {
+    Serial.print("ATTENTION! OVERHEATING!!");
+  }else{;}
+
   digitalWrite(LCD_BACKLIGHT, HIGH);
     // take a number of analog samples and add them up
     while (sample_count < NUM_SAMPLES) {
