@@ -40,7 +40,10 @@ void timerIsr(){
   lcd.print("RPM: ");
 
   int rotation = (counter / 20);
-  
+
+  Serial.print(rotation, DEC);
+  Serial.print(",");
+   
   lcd.print(rotation, DEC);
 
   lcd.setCursor(0,1);
@@ -128,10 +131,8 @@ void loop() {
     Serial.print(",");
     Serial.flush();
 
-    int rotation = (counter / 20);
-    Serial.print(rotation, DEC);
-    Serial.print(",");
-    Serial.flush();
+//    int rotation = (counter / 20);
+    //Serial.print(analogRead(A0));
     
     sample_count = 0;
     sum = 0;
