@@ -1,5 +1,3 @@
-#include <TimerThree.h>
-
 #include <TimerOne.h>
 
 #include <Ethernet.h>
@@ -12,8 +10,6 @@
 #include <EEPROM.h>
 
 #include <HID.h>
-
-#include <TimerOne.h>
 
 #include <LiquidCrystal.h>
 #include "TimerOne.h"
@@ -59,29 +55,6 @@ void timerIsr(){
   lcd.print(rotation, DEC);
   Serial.print(rotation);
 
-//  lcd.setCursor(0,1);
-//  lcd.print("Vcap: ");
-//  lcd.print(voltage * calib);
-//  lcd.print("V");
-//
-//  lcd.setCursor(14,0);
-//  if(digitalRead(pin_with_pullup) == HIGH)
-//  {lcd.print("OV");}
-//  else{;}
-//  if(digitalRead(pin_with_pullup2) == LOW)
-//  {lcd.print("OH");}
-//  else{;}
-//  
-//
-//  lcd.display();
-//  counter = 0;
-//  Timer1.attachInterrupt(timerIsr);
-  }
-
-void timerIsr2(){
-  Timer3.detachInterrupt();
-  lcd.begin(16,2);
-
   lcd.setCursor(0,1);
   lcd.print("Vcap: ");
   lcd.print(voltage * calib);
@@ -99,7 +72,7 @@ void timerIsr2(){
   lcd.display();
   counter = 0;
   Timer1.attachInterrupt(timerIsr);
-}
+  }
 
 void setup() {
   Serial.begin(9600);
@@ -110,10 +83,8 @@ void setup() {
   pinMode(LCD_BACKLIGHT, OUTPUT);
 
   Timer1.initialize(60000000);
-  Timer3.initialize(10000000);
   attachInterrupt(0, docount, RISING);
   Timer1.attachInterrupt(timerIsr);
-  Timer3.attachInterrupt(timerIsr2);
 }
 
 void loop() {
@@ -124,6 +95,8 @@ void loop() {
   int sensorVal2 = digitalRead(pin_with_pullup2);
 
   //Debug code
+  Serial.print("Debug --> AnalogRead -->");
+  Serial.println(analogRead(A2));
   Serial.print("Debug --> Digitalpin1 value -->");
   Serial.println(sensorVal);
   Serial.print("Debug --> Digitalpin2 value -->");
@@ -156,7 +129,6 @@ void loop() {
     // value
     current = (voltage * calib)/resistor;
     Serial.print(voltage * calib);
-    
     Serial.println (" V");
     Serial.print(current,9);
     Serial.println(" A");
