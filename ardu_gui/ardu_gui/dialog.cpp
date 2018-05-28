@@ -11,16 +11,18 @@ Dialog::Dialog(QWidget *parent) :
     ui(new Ui::Dialog)
 {
     ui->setupUi(this);
-    ui->ir_val->display("----");
+    ui->windmill_val->display("----");
     ui->supercaps_volt->display("----");
+    ui->externBat_volt->display("----");
 
     arduino = new QSerialPort(this);
     serialBuffer = "";
     parsed_data = "";
-    ir_val = 0;
+    windmill_val = 0;
+    supercaps_val = 0;
 
 
-         /*  Testing code, prints the description, vendor id, and product id of all ports.
+    /*  Testing code, prints the description, vendor id, and product id of all ports.
          *  Used it to determine the values for the arduino uno.
          *
          *
@@ -32,8 +34,7 @@ Dialog::Dialog(QWidget *parent) :
             qDebug() << "Has product id?: " << serialPortInfo.hasProductIdentifier() << "\n";
             qDebug() << "Product ID: " << serialPortInfo.productIdentifier() << "\n";
         }
-
-        */
+     */
 
     /*
      *   Identify the port the arduino uno is on.
@@ -89,31 +90,30 @@ void Dialog::readSerial()
      * readyRead() doesn't guarantee that the entire message will be received all at once.
      */
 
-   // QStringList buffer_split = serialBuffer.split(","); //  split the serialBuffer string, parsing with ',' as the separator
+    // QStringList buffer_split = serialBuffer.split(","); //  split the serialBuffer string, parsing with ',' as the separator
 
     //  Check to see if there less than 3 tokens in buffer_split.
     //  If there are at least 3 then this means there were 2 commas,
     //  means there is a parsed temperature value as the second token (between 2 commas)
-    //if(buffer_split.length() < 3){
-        // no parsed value yet so continue accumulating bytes from serial in the buffer.
-        QByteArray serialData = arduino->readAll();
-        QString temp = /*serialBuffer = serialBuffer +*/ QString::fromStdString(serialData.toStdString());
-        qDebug() << temp;//serialBuffer;
-        //serialData.clear();
-   // }else{
-        // the second element of buffer_split is parsed correctly, update the ir
-       // qDebug() << buffer_split;
-        //parsed_data = buffer_split[1];
-        //qDebug() << "IR val (Rot/sec): " << ir_val << "\n";
-        //parsed_data = QString::number(ir_val, 'g', 8);
-        Dialog::updateIRval(temp);
-        //serialBuffer = "";
+    QStringList bufferSplit = serialBuffer.split(".");
+    if(bufferSplit.length() < 3){
+    // no parsed value yet so continue accumulating bytes from serial in the buffer.
+    serialData = arduino->readAll();
+    serialBuffer += QString::fromStdString(serialData.toStdString());
+    qDebug() << serialBuffer;
+    serialData.clear();
+    }else{
+    // the second element of buffer_split is parsed correctly, update the ir
+    qDebug() << bufferSplit;
+    Dialog::updateIRval(bufferSplit[0.0]);
+    serialBuffer = "--";
     }
+}
 
 //}
 
 void Dialog::updateIRval(const QString sensor_reading)
 {
     //  update the value displayed on the lcdNumber
-    ui->ir_val->display(sensor_reading);
+    ui->windmill_val->display(sensor_reading);
 }
