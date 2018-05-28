@@ -19,7 +19,7 @@ public:
 
 private slots:
     void readSerial();
-    void updateIRval(const QString);
+    void updateWindmill(const QString);
     void updateVoltage(const QString);
 
 private:

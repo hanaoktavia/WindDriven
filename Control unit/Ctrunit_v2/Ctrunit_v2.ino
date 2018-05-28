@@ -1,16 +1,5 @@
 #include <TimerOne.h>
 
-#include <Ethernet.h>
-#include <EthernetServer.h>
-#include <EthernetUdp.h>
-#include <Dhcp.h>
-#include <EthernetClient.h>
-#include <Dns.h>
-
-#include <EEPROM.h>
-
-#include <HID.h>
-
 #include <LiquidCrystal.h>
 #include "TimerOne.h"
 
@@ -53,7 +42,6 @@ void timerIsr(){
   int rotation = (counter / 20);
   
   lcd.print(rotation, DEC);
-  Serial.print(rotation);
 
   lcd.setCursor(0,1);
   lcd.print("Vcap: ");
@@ -88,8 +76,7 @@ void setup() {
 }
 
 void loop() {
-  delay(100);
-
+  //Printing the RPM
   
   int sensorVal = digitalRead(pin_with_pullup);
   int sensorVal2 = digitalRead(pin_with_pullup2);
@@ -104,11 +91,17 @@ void loop() {
 
   if(sensorVal == HIGH)
   {
-    Serial.print("ATTENTION! OVERVOLTAGE!!");
+    //For debug use --> Serial.print("ATTENTION! OVERVOLTAGE!!");
+    Serial.print(sensorVal);
+    Serial.print(",");
+    Serial.flush();
   }else{;}
   if(sensorVal2 == HIGH)
   {
-    Serial.print("ATTENTION! OVERHEATING!!");
+    //For debug use --> Serial.print("ATTENTION! OVERHEATING!!");
+    Serial.print(sensorVal2);
+    Serial.print(",");
+    Serial.flush();
   }else{;}
 
   digitalWrite(LCD_BACKLIGHT, HIGH);
@@ -127,12 +120,22 @@ void loop() {
     // voltage multiplied by 11 when using voltage divider that
     // divides by 11. 11.132 is the calibrated voltage divide
     // value
-    //current = (voltage * calib)/resistor;
+    //For current measurement use the following formula: current = (voltage * calib)/resistor;
+    //For terminal debug uncomment this line and press enter --> //Serial.println (" V");
+    //For terminal debug uncomment this line and press enter --> //Serial.print(current,9); Serial.println(" A");
+    //Printing the voltage value
     Serial.print(voltage * calib);
-    Serial.println (" V");
-    //Serial.print(current,9);
-    //Serial.println(" A");
+    Serial.print(",");
+    Serial.flush();
+
+    int rotation = (counter / 20);
+    Serial.print(rotation, DEC);
+    Serial.print(",");
+    Serial.flush();
+    
     sample_count = 0;
     sum = 0;
+
+    delay(1000);
 
 }

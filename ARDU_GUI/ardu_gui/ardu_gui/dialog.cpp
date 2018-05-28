@@ -20,7 +20,6 @@ Dialog::Dialog(QWidget *parent) :
     parsed_data = "";
     windmill_val = 0;
     supercaps_val = 0;
-    //meh
 
 
     /*  Testing code, prints the description, vendor id, and product id of all ports.
@@ -96,8 +95,8 @@ void Dialog::readSerial()
     //  Check to see if there less than 3 tokens in buffer_split.
     //  If there are at least 3 then this means there were 2 commas,
     //  means there is a parsed temperature value as the second token (between 2 commas)
-    QStringList bufferSplit = serialBuffer.split(".");
-    if(bufferSplit.length() < 3){
+    QStringList bufferSplit = serialBuffer.split(",");
+    if(bufferSplit.length() < 5){
     // no parsed value yet so continue accumulating bytes from serial in the buffer.
     serialData = arduino->readAll();
     serialBuffer += QString::fromStdString(serialData.toStdString());
@@ -106,15 +105,22 @@ void Dialog::readSerial()
     }else{
     // the second element of buffer_split is parsed correctly, update the ir
     qDebug() << bufferSplit;
-    Dialog::updateIRval(bufferSplit[0.0]);
-    serialBuffer = "--";
+    Dialog::updateWindmill(bufferSplit[1]);
+    Dialog::updateVoltage(bufferSplit[2]);
+    //serialBuffer = "--";
     }
 }
 
 //}
 
-void Dialog::updateIRval(const QString sensor_reading)
+void Dialog::updateWindmill(const QString sensor_reading)
 {
     //  update the value displayed on the lcdNumber
     ui->windmill_val->display(sensor_reading);
+}
+
+void Dialog::updateVoltage(const QString sensor_reading)
+{
+    //  update the value displayed on the lcdNumber
+    ui->supercaps_volt->display(sensor_reading);
 }
