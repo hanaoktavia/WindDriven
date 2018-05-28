@@ -20,6 +20,7 @@ Dialog::Dialog(QWidget *parent) :
     parsed_data = "";
     windmill_val = 0;
     supercaps_val = 0;
+    //meh
 
 
     /*  Testing code, prints the description, vendor id, and product id of all ports.
