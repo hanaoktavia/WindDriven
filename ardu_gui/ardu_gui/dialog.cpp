@@ -12,7 +12,6 @@ Dialog::Dialog(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->ir_val->display("----");
-    ui->gen_current->display("----");
     ui->supercaps_volt->display("----");
 
     arduino = new QSerialPort(this);
