@@ -1,9 +1,23 @@
-//#include <TimerOne.h>
+#include <TimerOne.h>
+
+#include <Ethernet.h>
+#include <EthernetServer.h>
+#include <EthernetUdp.h>
+#include <Dhcp.h>
+#include <EthernetClient.h>
+#include <Dns.h>
+
+#include <EEPROM.h>
+
+#include <HID.h>
+
+#include <TimerOne.h>
 
 #include <LiquidCrystal.h>
 #include "TimerOne.h"
 
 #define NUM_SAMPLES 10
+#define LCD_BACKLIGHT A4
 
 int sum = 0;                    // sum of samples taken
 unsigned char sample_count = 0; // current sample number
@@ -33,15 +47,18 @@ void timerIsr(){
   Timer1.detachInterrupt();
   lcd.begin(16,2);
   
-  lcd.print("IR val= ");
+  lcd.print("RPM: ");
 
   int rotation = (counter / 20);
   
   lcd.print(rotation, DEC);
   Serial.print(rotation);
-  
-  lcd.println(" RPM");
-  
+
+  lcd.setCursor(0,1);
+  lcd.print("Vcap: ");
+  lcd.print(voltage * calib);
+  lcd.print("V");
+
   lcd.display();
   counter = 0;
   Timer1.attachInterrupt(timerIsr);
@@ -50,6 +67,8 @@ void timerIsr(){
 void setup() {
   Serial.begin(9600);
 
+  pinMode(LCD_BACKLIGHT, OUTPUT);
+
   Timer1.initialize(60000000);
   attachInterrupt(0, docount, RISING);
   Timer1.attachInterrupt(timerIsr);
@@ -57,7 +76,7 @@ void setup() {
 
 void loop() {
   delay(100);
-  
+  digitalWrite(LCD_BACKLIGHT, HIGH);
     // take a number of analog samples and add them up
     while (sample_count < NUM_SAMPLES) {
         sum += analogRead(A2);
@@ -75,6 +94,7 @@ void loop() {
     // value
     current = (voltage * calib)/resistor;
     Serial.print(voltage * calib);
+    
     Serial.println (" V");
     Serial.print(current,9);
     Serial.println(" A");
