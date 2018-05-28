@@ -127,7 +127,7 @@ void loop() {
     // voltage multiplied by 11 when using voltage divider that
     // divides by 11. 11.132 is the calibrated voltage divide
     // value
-    current = (voltage * calib)/resistor;
+    //current = (voltage * calib)/resistor;
     Serial.print(voltage * calib);
     Serial.println (" V");
     //Serial.print(current,9);
