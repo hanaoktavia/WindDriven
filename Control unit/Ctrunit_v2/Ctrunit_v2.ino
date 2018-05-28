@@ -60,11 +60,11 @@ void timerIsr(){
   lcd.print(voltage * calib);
   lcd.print("V");
 
-  lcd.setCursor(14,0);
+  lcd.setCursor(12,0);
   if(digitalRead(pin_with_pullup) == HIGH)
   {lcd.print("OV");}
   else{;}
-  if(digitalRead(pin_with_pullup2) == LOW)
+  if(digitalRead(pin_with_pullup2) == HIGH)
   {lcd.print("OH");}
   else{;}
   
@@ -95,12 +95,12 @@ void loop() {
   int sensorVal2 = digitalRead(pin_with_pullup2);
 
   //Debug code
-  Serial.print("Debug --> AnalogRead -->");
-  Serial.println(analogRead(A2));
-  Serial.print("Debug --> Digitalpin1 value -->");
-  Serial.println(sensorVal);
-  Serial.print("Debug --> Digitalpin2 value -->");
-  Serial.println(sensorVal2);
+//  Serial.print("Debug --> AnalogRead -->");
+//  Serial.println(analogRead(A2));
+//  Serial.print("Debug --> Digitalpin1 value -->");
+//  Serial.println(sensorVal);
+//  Serial.print("Debug --> Digitalpin2 value -->");
+//  Serial.println(sensorVal2);
 
   if(sensorVal == HIGH)
   {
@@ -130,8 +130,8 @@ void loop() {
     current = (voltage * calib)/resistor;
     Serial.print(voltage * calib);
     Serial.println (" V");
-    Serial.print(current,9);
-    Serial.println(" A");
+    //Serial.print(current,9);
+    //Serial.println(" A");
     sample_count = 0;
     sum = 0;
 
