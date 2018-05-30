@@ -19,9 +19,17 @@ Dialog::Dialog(QWidget *parent) :
 
     arduino = new QSerialPort(this);
     serialBuffer = "";
-    parsed_data = "";
-    windmill_val = 0;
-    supercaps_val = 0;
+    parsed_data1 = "";
+    parsed_data2 = "";
+    parsed_data3 = "";
+    parsed_data4 = "";
+    parsed_data5 = "";
+    windmill_val = 0.0;
+    supercaps_val = 0.0;
+    battery_val = 0.0;
+
+    digital1temp = 0;
+    digital2ov = 0;
 
     /*  Testing code, prints the description, vendor id, and product id of all ports.
          *  Used it to determine the values for the arduino uno.
@@ -93,20 +101,48 @@ void Dialog::readSerial()
     //  If there are at least 3 then this means there were 2 commas,
     //  means there is a parsed temperature value as the second token (between 2 commas)
     QStringList bufferSplit = serialBuffer.split(",");
-    if(bufferSplit.length() < 4){
+    qDebug()<<serialBuffer.count();
+    if(bufferSplit.length() < 7){
         // no parsed value yet so continue accumulating bytes from serial in the buffer.
         serialData = arduino->readAll();
-        serialBuffer += QString::fromStdString(serialData.toStdString());
-        qDebug() << serialBuffer;
+        serialBuffer = serialBuffer + QString::fromStdString(serialData.toStdString());
         serialData.clear();
+        qDebug()<<serialBuffer;
     }else{
         // the second element of buffer_split is parsed correctly, update the ir
-        qDebug() << bufferSplit;
+        serialBuffer="";
+        qDebug()<<bufferSplit<<"\n";
 
+        parsed_data1=bufferSplit[0]; // digitalT
+        parsed_data2=bufferSplit[1]; // digitalV
+        parsed_data3=bufferSplit[2]; // Supercap volt
+        parsed_data4=bufferSplit[3]; // Battery volt
+        parsed_data5=bufferSplit[4]; // rpm
 
-        Dialog::updateWindmill(bufferSplit[1]);
-        Dialog::updateVoltage(bufferSplit[2]);
-        //serialBuffer = "--";
+        digital1temp = parsed_data1.toDouble();
+        digital2ov = parsed_data2.toDouble();
+        supercaps_val = parsed_data3.toDouble();
+        battery_val = parsed_data4.toDouble();
+        windmill_val = parsed_data5.toDouble();
+
+        qDebug()<<"WindmillRPM: "<<windmill_val<<"\n";
+        qDebug()<<"SupercapsVoltage: "<<supercaps_val<<"\n";
+        qDebug()<<"BatteryVoltage: "<<battery_val<<"\n";
+        qDebug()<<"Overheating: "<<digital1temp<<"\n";
+        qDebug()<<"Overvoltage: "<<digital2ov<<"\n";
+
+        parsed_data1 = QString::number(digital1temp,'g',4);
+        parsed_data2 = QString::number(digital2ov,'g',4);
+        parsed_data3 = QString::number(supercaps_val,'g',4);
+        parsed_data4 = QString::number(battery_val,'g',4);
+        parsed_data5 = QString::number(windmill_val,'g',4);
+
+        Dialog::updateOverHeat(parsed_data1);
+        Dialog::updateOverVolt(parsed_data2);
+        Dialog::updateVoltage(parsed_data3);
+        Dialog::updateBattery(parsed_data4);
+        Dialog::updateWindmill(parsed_data5);
+
     }
 }
 
@@ -120,4 +156,18 @@ void Dialog::updateVoltage(const QString sensor_reading)
 {
     //  update the value displayed on the lcdNumber
     ui->supercaps_volt->display(sensor_reading);
+}
+
+void Dialog::updateBattery(QString sensor_reading)
+{
+    //  update the value displayed on the lcdNumber
+    ui->externBat_volt->display(sensor_reading);
+}
+
+void Dialog::updateOverVolt(QString sensor_reading){
+    ui->supercap_stat_ov->setValue(sensor_reading.toInt());
+}
+
+void Dialog::updateOverHeat(QString sensor_reading){
+    ui->supercap_stat_oh->setValue(sensor_reading.toInt());
 }
